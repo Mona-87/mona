@@ -1,0 +1,3763 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学友通 - 校内学习资源共享平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --light-bg: #f8f9fa;
+            --light-border: #e9ecef;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        /* 顶部导航栏 */
+        .navbar {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .logo i {
+            color: var(--secondary-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            background-color: var(--light-bg);
+            color: var(--secondary-color);
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--secondary-color);
+            color: var(--secondary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #219653;
+        }
+        
+        .btn-danger {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        
+        /* 主要内容区 */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 10px;
+            padding: 3rem 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .hero-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-section p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+        
+        .search-bar {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .search-bar input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+        
+        .search-bar button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        
+        /* 功能卡片 */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        /* 资源上传区域 */
+        .upload-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--light-border);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .upload-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            padding: 0.8rem;
+            border: 1px solid var(--light-border);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+        
+        .file-upload {
+            border: 2px dashed var(--light-border);
+            border-radius: 4px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+        }
+        
+        .file-upload:hover {
+            border-color: var(--secondary-color);
+        }
+        
+        /* 内容展示区 */
+        .content-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--light-border);
+            margin-bottom: 1.5rem;
+        }
+        
+        .tab {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+        
+        .tab.active {
+            color: var(--secondary-color);
+            border-bottom-color: var(--secondary-color);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* 资源列表和帖子列表 */
+        .resource-list, .post-list {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .resource-item, .post-item {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+        
+        .resource-item:hover, .post-item:hover {
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .resource-header, .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .resource-title, .post-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .resource-meta, .post-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        .resource-type {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .type-note {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .type-exam {
+            background-color: #fff3e0;
+            color: #f57c00;
+        }
+        
+        .type-experience {
+            background-color: #e8f5e9;
+            color: #388e3c;
+        }
+        
+        .resource-actions, .post-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--light-border);
+            background: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .action-btn:hover {
+            background-color: var(--light-bg);
+        }
+        
+        .btn-download {
+            color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .btn-download:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        /* 模态框 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1100;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--light-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+        
+        .modal-body {
+            padding: 1.5rem;
+        }
+        
+        /* 第三方登录按钮 */
+        .social-login {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-btn {
+            padding: 0.8rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+        
+        .qq-btn {
+            background-color: #12b7f5;
+            color: white;
+        }
+        
+        .qq-btn:hover {
+            background-color: #0fa1d9;
+        }
+        
+        .wechat-btn {
+            background-color: #07c160;
+            color: white;
+        }
+        
+        .wechat-btn:hover {
+            background-color: #06ad56;
+        }
+        
+        /* 加载指示器 */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--light-border);
+            border-top: 4px solid var(--secondary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* 空状态 */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-light);
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--light-border);
+        }
+        
+        /* 消息提示 */
+        .message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 4px;
+            box-shadow: var(--shadow);
+            z-index: 1200;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            max-width: 400px;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        .message-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .message-error {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .message-info {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 3rem 0 2rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid #34495e;
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero-section h1 {
+                font-size: 1.8rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .resource-header, .post-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>学友通</span>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="#" class="active" data-tab="home">首页</a></li>
+                <li><a href="#" data-tab="resources">学习资源</a></li>
+                <li><a href="#" data-tab="forum">问答社区</a></li>
+                <li><a href="#" data-tab="upload">上传资源</a></li>
+                <li><a href="#" data-tab="courses">课程广场</a></li>
+            </ul>
+            
+            <div class="user-actions">
+                <!-- 用户登录状态将通过JS动态更新 -->
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容区 -->
+    <main class="container">
+        <!-- 首页区域 -->
+        <section id="home" class="tab-content active">
+            <div class="hero-section">
+                <h1>学友通 - 校园学习资源共享平台</h1>
+                <p>汇聚校内优质学习资源，分享课程笔记、往年试题、学习心得，构建互助学习社区</p>
+                
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="搜索学习资源、课程或问题...">
+                    <button id="searchBtn"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <h3>资源共享</h3>
+                    <p>上传、下载、转载各类学习资源，包括课程笔记、往年试题、学习心得等，与同学共同进步。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h3>问答社区</h3>
+                    <p>在论坛上提问或回答他人问题，参考知乎式交互，构建活跃的学习交流社区。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>社交登录</h3>
+                    <p>支持QQ、微信等多种方式注册登录，快速加入学友通社区，与同学建立联系。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>数据持久化</h3>
+                    <p>所有上传资源永久保存，确保再次进入平台能够查看，构建持续增长的学习资源库。</p>
+                </div>
+            </div>
+            
+            <div class="upload-section">
+                <div class="section-header">
+                    <h2 class="section-title">最新学习资源</h2>
+                    <button class="btn btn-primary" id="viewAllResources">
+                        <i class="fas fa-list"></i> 查看全部
+                    </button>
+                </div>
+                
+                <div class="resource-list" id="latestResources">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 学习资源区域 -->
+        <section id="resources" class="tab-content">
+            <div class="section-header">
+                <h2 class="section-title">学习资源库</h2>
+                <div>
+                    <select id="resourceTypeFilter" class="form-control" style="width: 150px; display: inline-block; margin-right: 10px;">
+                        <option value="">全部类型</option>
+                        <option value="note">课程笔记</option>
+                        <option value="exam">往年试题</option>
+                        <option value="experience">学习心得</option>
+                    </select>
+                    <select id="courseFilter" class="form-control" style="width: 150px; display: inline-block;">
+                        <option value="">全部课程</option>
+                        <!-- 课程选项将通过JS动态加载 -->
+                    </select>
+                </div>
+            </div>
+            
+            <div class="resource-list" id="allResources">
+                <div class="loading">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+            
+            <div id="paginationControls" style="display: none; margin-top: 2rem; text-align: center;">
+                <button id="prevPage" class="btn btn-outline" disabled>
+                    <i class="fas fa-chevron-left"></i> 上一页
+                </button>
+                <span id="pageInfo" style="margin: 0 1rem;"></span>
+                <button id="nextPage" class="btn btn-outline" disabled>
+                    下一页 <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </section>
+        
+        <!-- 问答社区区域 -->
+        <section id="forum" class="tab-content">
+            <div class="section-header">
+                <h2 class="section-title">问答社区</h2>
+                <button class="btn btn-success" id="askQuestionBtn">
+                    <i class="fas fa-plus"></i> 提问
+                </button>
+            </div>
+            
+            <div class="post-list" id="forumPosts">
+                <div class="loading">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 上传资源区域 -->
+        <section id="upload" class="tab-content">
+            <div class="upload-section">
+                <div class="section-header">
+                    <h2 class="section-title">上传学习资源</h2>
+                </div>
+                
+                <form id="resourceUploadForm" class="upload-form">
+                    <div class="form-group">
+                        <label for="resourceTitle">资源标题 *</label>
+                        <input type="text" id="resourceTitle" class="form-control" placeholder="例如：2025年数据结构期末试题（含答案）" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="resourceType">资源类型 *</label>
+                        <select id="resourceType" class="form-control" required>
+                            <option value="">请选择资源类型</option>
+                            <option value="note">课程笔记</option>
+                            <option value="exam">往年试题</option>
+                            <option value="experience">学习心得</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="courseName">所属课程</label>
+                        <input type="text" id="courseName" class="form-control" placeholder="例如：数据结构">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="resourceDescription">资源描述</label>
+                        <textarea id="resourceDescription" class="form-control" rows="4" placeholder="请简要描述资源内容..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="resourceFile">上传文件 *</label>
+                        <div class="file-upload" id="fileUploadArea">
+                            <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color: var(--secondary-color); margin-bottom: 1rem;"></i>
+                            <p>点击或拖拽文件到此处上传</p>
+                            <p style="font-size: 0.9rem; color: var(--text-light); margin-top: 0.5rem;">支持PDF、Word、Excel、PPT、图片等格式，最大50MB</p>
+                            <input type="file" id="resourceFile" style="display: none;" required>
+                        </div>
+                        <div id="fileName" style="margin-top: 0.5rem; font-size: 0.9rem;"></div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="align-self: flex-start;">
+                        <i class="fas fa-upload"></i> 上传资源
+                    </button>
+                </form>
+            </div>
+        </section>
+        
+        <!-- 课程广场区域 -->
+        <section id="courses" class="tab-content">
+            <div class="upload-section">
+                <div class="section-header">
+                    <h2 class="section-title">热门课程</h2>
+                </div>
+                
+                <div id="coursesList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 登录模态框 -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">登录学友通</h3>
+                <button class="modal-close" id="closeLoginModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginUsername">用户名</label>
+                        <input type="text" id="loginUsername" class="form-control" placeholder="请输入用户名" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="loginPassword">密码</label>
+                        <input type="password" id="loginPassword" class="form-control" placeholder="请输入密码" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-sign-in-alt"></i> 登录
+                    </button>
+                    
+                    <div class="social-login">
+                        <p style="text-align: center; margin: 1rem 0; color: var(--text-light);">或使用第三方账号登录</p>
+                        <button type="button" class="social-btn qq-btn">
+                            <i class="fab fa-qq"></i> QQ登录
+                        </button>
+                        <button type="button" class="social-btn wechat-btn">
+                            <i class="fab fa-weixin"></i> 微信登录
+                        </button>
+                    </div>
+                    
+                    <p style="text-align: center; margin-top: 1.5rem;">
+                        还没有账号？ <a href="#" id="switchToRegister" style="color: var(--secondary-color);">立即注册</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 注册模态框 -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">注册学友通</h3>
+                <button class="modal-close" id="closeRegisterModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="registerUsername">用户名 *</label>
+                        <input type="text" id="registerUsername" class="form-control" placeholder="请输入用户名" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerEmail">邮箱</label>
+                        <input type="email" id="registerEmail" class="form-control" placeholder="请输入邮箱">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerPassword">密码 *</label>
+                        <input type="password" id="registerPassword" class="form-control" placeholder="请输入密码" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmPassword">确认密码 *</label>
+                        <input type="password" id="confirmPassword" class="form-control" placeholder="请再次输入密码" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-user-plus"></i> 注册
+                    </button>
+                    
+                    <div class="social-login">
+                        <p style="text-align: center; margin: 1rem 0; color: var(--text-light);">或使用第三方账号注册</p>
+                        <button type="button" class="social-btn qq-btn">
+                            <i class="fab fa-qq"></i> QQ注册
+                        </button>
+                        <button type="button" class="social-btn wechat-btn">
+                            <i class="fab fa-weixin"></i> 微信注册
+                        </button>
+                    </div>
+                    
+                    <p style="text-align: center; margin-top: 1.5rem;">
+                        已有账号？ <a href="#" id="switchToLogin" style="color: var(--secondary-color);">立即登录</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 提问模态框 -->
+    <div class="modal" id="askModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">提出问题</h3>
+                <button class="modal-close" id="closeAskModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="askForm">
+                    <div class="form-group">
+                        <label for="questionTitle">问题标题 *</label>
+                        <input type="text" id="questionTitle" class="form-control" placeholder="请用一句话描述你的问题" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="questionContent">问题详情 *</label>
+                        <textarea id="questionContent" class="form-control" rows="6" placeholder="请详细描述你的问题，方便他人更好地回答..." required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="questionTags">标签（用逗号分隔）</label>
+                        <input type="text" id="questionTags" class="form-control" placeholder="例如：数据结构,算法,时间复杂度">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success" style="width: 100%;">
+                        <i class="fas fa-paper-plane"></i> 发布问题
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 消息提示容器 -->
+    <div id="messageContainer"></div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>关于学友通</h3>
+                <ul class="footer-links">
+                    <li><a href="#">平台介绍</a></li>
+                    <li><a href="#">发展历程</a></li>
+                    <li><a href="#">加入我们</a></li>
+                    <li><a href="#">联系我们</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>学习资源</h3>
+                <ul class="footer-links">
+                    <li><a href="#">课程笔记</a></li>
+                    <li><a href="#">往年试题</a></li>
+                    <li><a href="#">学习心得</a></li>
+                    <li><a href="#">课程资料</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>帮助中心</h3>
+                <ul class="footer-links">
+                    <li><a href="#">使用指南</a></li>
+                    <li><a href="#">常见问题</a></li>
+                    <li><a href="#">资源上传规范</a></li>
+                    <li><a href="#">社区准则</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>关注我们</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fab fa-weixin" style="margin-right: 8px;"></i> 微信公众号</a></li>
+                    <li><a href="#"><i class="fab fa-qq" style="margin-right: 8px;"></i> QQ交流群</a></li>
+                    <li><a href="#"><i class="fab fa-weibo" style="margin-right: 8px;"></i> 新浪微博</a></li>
+                    <li><a href="#"><i class="fas fa-envelope" style="margin-right: 8px;"></i> 邮箱反馈</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2026 学友通 - 校内学习资源共享平台. 保留所有权利.</p>
+            <p>采用前后端分离设计 | 数据存储使用SQLite | 支持第三方登录</p>
+        </div>
+    </footer>
+
+    <script>
+        // API配置
+        const API_BASE_URL = 'http://localhost:5000/api'; // 修改为您的后端地址
+        
+        // 当前用户状态
+        let currentUser = null;
+        let currentPage = 1;
+        const pageSize = 10;
+        
+        // DOM加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 检查登录状态
+            checkAuthStatus();
+            
+            // 初始化标签页切换
+            initTabs();
+            
+            // 初始化模态框
+            initModals();
+            
+            // 初始化表单
+            initForms();
+            
+            // 初始化文件上传区域
+            initFileUpload();
+            
+            // 初始化搜索功能
+            initSearch();
+            
+            // 加载课程选项
+            loadCourseOptions();
+            
+            // 加载首页数据
+            loadLatestResources();
+            loadForumPosts();
+            loadCourses();
+            
+            // 初始化分页控制
+            initPagination();
+        });
+        
+        // 工具函数
+        function showMessage(message, type = 'info', duration = 3000) {
+            const container = document.getElementById('messageContainer');
+            const messageEl = document.createElement('div');
+            messageEl.className = `message message-${type}`;
+            messageEl.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            container.appendChild(messageEl);
+            
+            // 自动移除
+            setTimeout(() => {
+                messageEl.style.animation = 'slideIn 0.3s ease-out reverse';
+                setTimeout(() => {
+                    if (container.contains(messageEl)) {
+                        container.removeChild(messageEl);
+                    }
+                }, 300);
+            }, duration);
+            
+            return messageEl;
+        }
+        
+        function formatTime(createdAt) {
+            if (!createdAt) return '未知时间';
+            
+            const date = new Date(createdAt);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffSec = Math.floor(diffMs / 1000);
+            const diffMin = Math.floor(diffSec / 60);
+            const diffHour = Math.floor(diffMin / 60);
+            const diffDay = Math.floor(diffHour / 24);
+            const diffMonth = Math.floor(diffDay / 30);
+            const diffYear = Math.floor(diffDay / 365);
+            
+            if (diffYear > 0) return `${diffYear}年前`;
+            if (diffMonth > 0) return `${diffMonth}个月前`;
+            if (diffDay > 0) return `${diffDay}天前`;
+            if (diffHour > 0) return `${diffHour}小时前`;
+            if (diffMin > 0) return `${diffMin}分钟前`;
+            return '刚刚';
+        }
+        
+        function formatFileSize(bytes) {
+            if (!bytes) return '未知大小';
+            if (bytes < 1024) return bytes + 'B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + 'KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + 'MB';
+        }
+        
+        // 检查登录状态
+        async function checkAuthStatus() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/check`, {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success && data.data.is_logged_in) {
+                        currentUser = data.data.user;
+                        updateUserUI();
+                    }
+                }
+            } catch (error) {
+                console.error('检查登录状态失败:', error);
+            }
+        }
+        
+        // 更新用户UI
+        function updateUserUI() {
+            const userActions = document.querySelector('.user-actions');
+            
+            if (currentUser) {
+                userActions.innerHTML = `
+                    <span style="margin-right: 1rem;">欢迎，${currentUser.username}</span>
+                    <button class="btn btn-outline" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i> 退出
+                    </button>
+                `;
+                
+                // 添加退出事件
+                const logoutBtn = document.getElementById('logoutBtn');
+                if (logoutBtn) {
+                    logoutBtn.addEventListener('click', logout);
+                }
+            } else {
+                userActions.innerHTML = `
+                    <button class="btn btn-outline" id="loginBtn">
+                        <i class="fas fa-sign-in-alt"></i> 登录
+                    </button>
+                    <button class="btn btn-primary" id="registerBtn">
+                        <i class="fas fa-user-plus"></i> 注册
+                    </button>
+                `;
+                
+                // 重新绑定事件
+                document.getElementById('loginBtn').addEventListener('click', () => {
+                    document.getElementById('loginModal').classList.add('active');
+                });
+                
+                document.getElementById('registerBtn').addEventListener('click', () => {
+                    document.getElementById('registerModal').classList.add('active');
+                });
+            }
+        }
+        
+        // 标签页切换功能
+        function initTabs() {
+            const navLinks = document.querySelectorAll('.nav-links a');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // 移除所有active类
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // 为当前点击的链接添加active类
+                    this.classList.add('active');
+                    
+                    // 显示对应的内容区域
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                    
+                    // 加载对应标签页的数据
+                    if (tabId === 'resources') {
+                        loadResources(currentPage);
+                    } else if (tabId === 'forum') {
+                        loadForumPosts();
+                    } else if (tabId === 'courses') {
+                        loadCourses();
+                    }
+                });
+            });
+        }
+        
+        // 初始化模态框
+        function initModals() {
+            // 登录模态框
+            const loginModal = document.getElementById('loginModal');
+            const closeLoginModal = document.getElementById('closeLoginModal');
+            
+            if (closeLoginModal) {
+                closeLoginModal.addEventListener('click', () => {
+                    loginModal.classList.remove('active');
+                });
+            }
+            
+            // 注册模态框
+            const registerModal = document.getElementById('registerModal');
+            const closeRegisterModal = document.getElementById('closeRegisterModal');
+            
+            if (closeRegisterModal) {
+                closeRegisterModal.addEventListener('click', () => {
+                    registerModal.classList.remove('active');
+                });
+            }
+            
+            // 提问模态框
+            const askModal = document.getElementById('askModal');
+            const closeAskModal = document.getElementById('closeAskModal');
+            
+            if (closeAskModal) {
+                closeAskModal.addEventListener('click', () => {
+                    askModal.classList.remove('active');
+                });
+            }
+            
+            // 模态框切换
+            const switchToRegister = document.getElementById('switchToRegister');
+            const switchToLogin = document.getElementById('switchToLogin');
+            
+            if (switchToRegister) {
+                switchToRegister.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    loginModal.classList.remove('active');
+                    registerModal.classList.add('active');
+                });
+            }
+            
+            if (switchToLogin) {
+                switchToLogin.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    registerModal.classList.remove('active');
+                    loginModal.classList.add('active');
+                });
+            }
+            
+            // 点击模态框外部关闭
+            window.addEventListener('click', (e) => {
+                if (e.target === loginModal) {
+                    loginModal.classList.remove('active');
+                }
+                if (e.target === registerModal) {
+                    registerModal.classList.remove('active');
+                }
+                if (e.target === askModal) {
+                    askModal.classList.remove('active');
+                }
+            });
+        }
+        
+        // 初始化表单
+        function initForms() {
+            // 登录表单
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const username = document.getElementById('loginUsername').value.trim();
+                    const password = document.getElementById('loginPassword').value.trim();
+                    
+                    if (!username || !password) {
+                        showMessage('请输入用户名和密码', 'error');
+                        return;
+                    }
+                    
+                    try {
+                        const response = await fetch(`${API_BASE_URL}/auth/login`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ username, password }),
+                            credentials: 'include'
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            currentUser = {
+                                id: data.data.user_id,
+                                username: data.data.username
+                            };
+                            
+                            updateUserUI();
+                            document.getElementById('loginModal').classList.remove('active');
+                            showMessage('登录成功！', 'success');
+                            loginForm.reset();
+                            
+                            // 重新加载数据
+                            loadLatestResources();
+                            loadResources(currentPage);
+                            loadForumPosts();
+                        } else {
+                            showMessage(data.message || '登录失败', 'error');
+                        }
+                    } catch (error) {
+                        console.error('登录失败:', error);
+                        showMessage('网络错误，请稍后重试', 'error');
+                    }
+                });
+            }
+            
+            // 注册表单
+            const registerForm = document.getElementById('registerForm');
+            if (registerForm) {
+                registerForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const username = document.getElementById('registerUsername').value.trim();
+                    const email = document.getElementById('registerEmail').value.trim();
+                    const password = document.getElementById('registerPassword').value.trim();
+                    const confirmPassword = document.getElementById('confirmPassword').value.trim();
+                    
+                    if (!username || !password) {
+                        showMessage('用户名和密码不能为空', 'error');
+                        return;
+                    }
+                    
+                    if (password !== confirmPassword) {
+                        showMessage('两次输入的密码不一致', 'error');
+                        return;
+                    }
+                    
+                    if (password.length < 6) {
+                        showMessage('密码长度至少6位', 'error');
+                        return;
+                    }
+                    
+                    try {
+                        const response = await fetch(`${API_BASE_URL}/auth/register`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ username, email, password }),
+                            credentials: 'include'
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            currentUser = {
+                                id: data.data.user_id,
+                                username: data.data.username
+                            };
+                            
+                            updateUserUI();
+                            document.getElementById('registerModal').classList.remove('active');
+                            showMessage('注册成功！', 'success');
+                            registerForm.reset();
+                            
+                            // 重新加载数据
+                            loadLatestResources();
+                            loadResources(currentPage);
+                            loadForumPosts();
+                        } else {
+                            showMessage(data.message || '注册失败', 'error');
+                        }
+                    } catch (error) {
+                        console.error('注册失败:', error);
+                        showMessage('网络错误，请稍后重试', 'error');
+                    }
+                });
+            }
+            
+            // 退出登录
+            async function logout() {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/auth/logout`, {
+                        method: 'POST',
+                        credentials: 'include'
+                    });
+                    
+                    if (response.ok) {
+                        currentUser = null;
+                        updateUserUI();
+                        showMessage('已退出登录', 'success');
+                        
+                        // 重新加载数据
+                        loadLatestResources();
+                        loadResources(currentPage);
+                        loadForumPosts();
+                    }
+                } catch (error) {
+                    console.error('退出登录失败:', error);
+                }
+            }
+            
+            // 资源上传表单
+            const resourceUploadForm = document.getElementById('resourceUploadForm');
+            if (resourceUploadForm) {
+                resourceUploadForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    if (!currentUser) {
+                        showMessage('请先登录再上传资源', 'error');
+                        document.getElementById('loginModal').classList.add('active');
+                        return;
+                    }
+                    
+                    const title = document.getElementById('resourceTitle').value.trim();
+                    const type = document.getElementById('resourceType').value;
+                    const course = document.getElementById('courseName').value.trim();
+                    const description = document.getElementById('resourceDescription').value.trim();
+                    const fileInput = document.getElementById('resourceFile');
+                    
+                    if (!title || !type || !fileInput.files.length) {
+                        showMessage('请填写必填字段并选择文件', 'error');
+                        return;
+                    }
+                    
+                    const formData = new FormData();
+                    formData.append('title', title);
+                    formData.append('resource_type', type);
+                    formData.append('course_name', course);
+                    formData.append('description', description);
+                    formData.append('file', fileInput.files[0]);
+                    
+                    try {
+                        const response = await fetch(`${API_BASE_URL}/resources`, {
+                            method: 'POST',
+                            body: formData,
+                            credentials: 'include'
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            showMessage('资源上传成功！', 'success');
+                            resourceUploadForm.reset();
+                            document.getElementById('fileName').textContent = '';
+                            
+                            // 重新加载资源列表
+                            loadLatestResources();
+                            loadResources(currentPage);
+                            loadCourseOptions();
+                            
+                            // 切换到资源页面
+                            document.querySelector('.nav-links a[data-tab="resources"]').click();
+                        } else {
+                            showMessage(data.message || '上传失败', 'error');
+                        }
+                    } catch (error) {
+                        console.error('上传失败:', error);
+                        showMessage('网络错误，请稍后重试', 'error');
+                    }
+                });
+            }
+            
+            // 提问表单
+            const askForm = document.getElementById('askForm');
+            if (askForm) {
+                askForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    if (!currentUser) {
+                        showMessage('请先登录再提问', 'error');
+                        document.getElementById('loginModal').classList.add('active');
+                        return;
+                    }
+                    
+                    const title = document.getElementById('questionTitle').value.trim();
+                    const content = document.getElementById('questionContent').value.trim();
+                    const tags = document.getElementById('questionTags').value.trim();
+                    
+                    if (!title || !content) {
+                        showMessage('请填写问题标题和详情', 'error');
+                        return;
+                    }
+                    
+                    const tagList = tags ? tags.split(',').map(tag => tag.trim()).filter(tag => tag) : [];
+                    
+                    try {
+                        const response = await fetch(`${API_BASE_URL}/forum/posts`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ title, content, tags: tagList }),
+                            credentials: 'include'
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            showMessage('问题发布成功！', 'success');
+                            askForm.reset();
+                            document.getElementById('askModal').classList.remove('active');
+                            
+                            // 重新加载帖子列表
+                            loadForumPosts();
+                        } else {
+                            showMessage(data.message || '发布失败', 'error');
+                        }
+                    } catch (error) {
+                        console.error('发布失败:', error);
+                        showMessage('网络错误，请稍后重试', 'error');
+                    }
+                });
+            }
+            
+            // 第三方登录按钮
+            const qqButtons = document.querySelectorAll('.qq-btn');
+            qqButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    showMessage('QQ登录功能需要对接QQ开放平台API', 'info');
+                });
+            });
+            
+            const wechatButtons = document.querySelectorAll('.wechat-btn');
+            wechatButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    showMessage('微信登录功能需要对接微信开放平台API', 'info');
+                });
+            });
+            
+            // 提问按钮
+            const askQuestionBtn = document.getElementById('askQuestionBtn');
+            if (askQuestionBtn) {
+                askQuestionBtn.addEventListener('click', () => {
+                    if (!currentUser) {
+                        showMessage('请先登录再提问', 'error');
+                        document.getElementById('loginModal').classList.add('active');
+                        return;
+                    }
+                    document.getElementById('askModal').classList.add('active');
+                });
+            }
+        }
+        
+        // 初始化文件上传区域
+        function initFileUpload() {
+            const fileUploadArea = document.getElementById('fileUploadArea');
+            const fileInput = document.getElementById('resourceFile');
+            const fileName = document.getElementById('fileName');
+            
+            if (fileUploadArea && fileInput) {
+                // 点击区域选择文件
+                fileUploadArea.addEventListener('click', () => {
+                    fileInput.click();
+                });
+                
+                // 拖放文件
+                fileUploadArea.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    fileUploadArea.style.borderColor = 'var(--secondary-color)';
+                    fileUploadArea.style.backgroundColor = 'rgba(52, 152, 219, 0.1)';
+                });
+                
+                fileUploadArea.addEventListener('dragleave', () => {
+                    fileUploadArea.style.borderColor = '';
+                    fileUploadArea.style.backgroundColor = '';
+                });
+                
+                fileUploadArea.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    fileUploadArea.style.borderColor = '';
+                    fileUploadArea.style.backgroundColor = '';
+                    
+                    if (e.dataTransfer.files.length) {
+                        fileInput.files = e.dataTransfer.files;
+                        updateFileName();
+                    }
+                });
+                
+                // 文件选择变化
+                fileInput.addEventListener('change', updateFileName);
+                
+                function updateFileName() {
+                    if (fileInput.files.length) {
+                        const file = fileInput.files[0];
+                        fileName.textContent = `已选择文件: ${file.name} (${formatFileSize(file.size)})`;
+                        fileName.style.color = 'var(--success-color)';
+                    } else {
+                        fileName.textContent = '';
+                    }
+                }
+            }
+        }
+        
+        // 加载最新资源
+        async function loadLatestResources() {
+            const container = document.getElementById('latestResources');
+            if (!container) return;
+            
+            container.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/resources?limit=3`);
+                const data = await response.json();
+                
+                if (data.success && data.data.resources.length > 0) {
+                    container.innerHTML = '';
+                    data.data.resources.forEach(resource => {
+                        container.appendChild(createResourceElement(resource));
+                    });
+                } else {
+                    container.innerHTML = '<div class="empty-state"><i class="fas fa-folder-open"></i><p>暂无学习资源</p></div>';
+                }
+            } catch (error) {
+                console.error('加载最新资源失败:', error);
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>加载失败，请稍后重试</p></div>';
+            }
+        }
+        
+        // 加载所有资源
+        async function loadResources(page = 1) {
+            const container = document.getElementById('allResources');
+            if (!container) return;
+            
+            container.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+            
+            const typeFilter = document.getElementById('resourceTypeFilter')?.value || '';
+            const courseFilter = document.getElementById('courseFilter')?.value || '';
+            
+            let url = `${API_BASE_URL}/resources?page=${page}&limit=${pageSize}`;
+            if (typeFilter) url += `&type=${typeFilter}`;
+            if (courseFilter) url += `&course=${courseFilter}`;
+            
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.success) {
+                    container.innerHTML = '';
+                    
+                    if (data.data.resources.length > 0) {
+                        data.data.resources.forEach(resource => {
+                            container.appendChild(createResourceElement(resource));
+                        });
+                        
+                        // 更新分页信息
+                        updatePagination(data.data.pagination);
+                    } else {
+                        container.innerHTML = '<div class="empty-state"><i class="fas fa-folder-open"></i><p>暂无学习资源</p></div>';
+                        document.getElementById('paginationControls').style.display = 'none';
+                    }
+                } else {
+                    container.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>加载失败，请稍后重试</p></div>';
+                }
+            } catch (error) {
+                console.error('加载资源失败:', error);
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>加载失败，请稍后重试</p></div>';
+            }
+        }
+        
+        // 创建资源元素
+        function createResourceElement(resource) {
+            const div = document.createElement('div');
+            div.className = 'resource-item';
+            
+            const typeText = resource.resource_type === 'note' ? '课程笔记' : 
+                           resource.resource_type === 'exam' ? '往年试题' : '学习心得';
+            const typeClass = resource.resource_type === 'note' ? 'type-note' : 
+                            resource.resource_type === 'exam' ? 'type-exam' : 'type-experience';
+            
+            div.innerHTML = `
+                <div class="resource-header">
+                    <div style="flex: 1;">
+                        <h3 class="resource-title">${resource.title}</h3>
+                        <p style="color: var(--text-light); margin-bottom: 0.5rem;">${resource.description || '暂无描述'}</p>
+                        <div class="resource-meta">
+                            <span class="resource-type ${typeClass}">${typeText}</span>
+                            <span><i class="fas fa-book" style="margin-right: 5px;"></i> ${resource.course_name || '未分类'}</span>
+                            <span><i class="fas fa-user" style="margin-right: 5px;"></i> ${resource.username}</span>
+                            <span><i class="fas fa-download" style="margin-right: 5px;"></i> ${resource.download_count || 0}次下载</span>
+                            <span><i class="fas fa-eye" style="margin-right: 5px;"></i> ${resource.view_count || 0}次查看</span>
+                            <span><i class="fas fa-clock" style="margin-right: 5px;"></i> ${resource.time_display || formatTime(resource.created_at)}</span>
+                        </div>
+                    </div>
+                    <div style="font-size: 0.9rem; color: var(--text-light);">
+                        ${resource.file_size_display || formatFileSize(resource.filesize)}
+                    </div>
+                </div>
+                <div class="resource-actions">
+                    <button class="action-btn btn-download" data-id="${resource.id}">
+                        <i class="fas fa-download"></i> 下载
+                    </button>
+                    <button class="action-btn" data-id="${resource.id}" onclick="viewResource(${resource.id})">
+                        <i class="fas fa-eye"></i> 查看
+                    </button>
+                </div>
+            `;
+            
+            // 添加下载事件
+            const downloadBtn = div.querySelector('.btn-download');
+            downloadBtn.addEventListener('click', function() {
+                if (!currentUser) {
+                    showMessage('请先登录再下载资源', 'error');
+                    document.getElementById('loginModal').classList.add('active');
+                    return;
+                }
+                
+                const resourceId = this.getAttribute('data-id');
+                downloadResource(resourceId);
+            });
+            
+            return div;
+        }
+        
+        // 查看资源详情
+        async function viewResource(resourceId) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/resources/${resourceId}`, {
+                    credentials: 'include'
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        const resource = data.data;
+                        alert(`资源详情：\n标题：${resource.title}\n描述：${resource.description || '暂无'}\n课程：${resource.course_name || '未分类'}\n上传者：${resource.username}\n上传时间：${formatTime(resource.created_at)}\n下载次数：${resource.download_count}\n查看次数：${resource.view_count}`);
+                    }
+                }
+            } catch (error) {
+                console.error('查看资源详情失败:', error);
+            }
+        }
+        
+        // 下载资源
+        async function downloadResource(resourceId) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/resources/${resourceId}/download`, {
+                    credentials: 'include'
+                });
+                
+                if (response.ok) {
+                    // 创建下载链接
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    
+                    // 从Content-Disposition获取文件名
+                    const contentDisposition = response.headers.get('Content-Disposition');
+                    let filename = 'resource';
+                    if (contentDisposition) {
+                        const filenameMatch = contentDisposition.match(/filename="?([^"]+)"?/);
+                        if (filenameMatch && filenameMatch[1]) {
+                            filename = filenameMatch[1];
+                        }
+                    }
+                    
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                    
+                    showMessage('开始下载资源', 'success');
+                    
+                    // 重新加载资源列表以更新下载次数
+                    loadLatestResources();
+                    loadResources(currentPage);
+                } else {
+                    const errorData = await response.json();
+                    showMessage(errorData.message || '下载失败', 'error');
+                }
+            } catch (error) {
+                console.error('下载资源失败:', error);
+                showMessage('下载失败，请稍后重试', 'error');
+            }
+        }
+        
+        // 加载论坛帖子
+        async function loadForumPosts() {
+            const container = document.getElementById('forumPosts');
+            if (!container) return;
+            
+            container.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/forum/posts?limit=20`);
+                const data = await response.json();
+                
+                if (data.success && data.data.posts.length > 0) {
+                    container.innerHTML = '';
+                    data.data.posts.forEach(post => {
+                        container.appendChild(createPostElement(post));
+                    });
+                } else {
+                    container.innerHTML = '<div class="empty-state"><i class="fas fa-comments"></i><p>暂无讨论</p></div>';
+                }
+            } catch (error) {
+                console.error('加载论坛帖子失败:', error);
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>加载失败，请稍后重试</p></div>';
+            }
+        }
+        
+        // 创建帖子元素
+        function createPostElement(post) {
+            const div = document.createElement('div');
+            div.className = 'post-item';
+            
+            const tagsHtml = post.tags_list && post.tags_list.length > 0 
+                ? `<div style="margin-top: 0.5rem;">${post.tags_list.map(tag => 
+                    `<span style="display: inline-block; background-color: var(--light-bg); color: var(--text-light); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem; margin-right: 0.5rem;">${tag}</span>`
+                  ).join('')}</div>` 
+                : '';
+            
+            div.innerHTML = `
+                <div class="post-header">
+                    <div style="flex: 1;">
+                        <h3 class="post-title">${post.title}</h3>
+                        <p style="color: var(--text-light); margin-bottom: 0.5rem;">${post.content.substring(0, 100)}${post.content.length > 100 ? '...' : ''}</p>
+                        <div class="post-meta">
+                            <span><i class="fas fa-user" style="margin-right: 5px;"></i> ${post.username}</span>
+                            <span><i class="fas fa-comment" style="margin-right: 5px;"></i> ${post.reply_count || 0}个回答</span>
+                            <span><i class="fas fa-eye" style="margin-right: 5px;"></i> ${post.view_count || 0}次浏览</span>
+                            <span><i class="fas fa-clock" style="margin-right: 5px;"></i> ${post.time_display || formatTime(post.created_at)}</span>
+                        </div>
+                        ${tagsHtml}
+                    </div>
+                </div>
+                <div class="post-actions">
+                    <button class="action-btn" data-id="${post.id}" onclick="viewPost(${post.id})">
+                        <i class="fas fa-reply"></i> 回答
+                    </button>
+                    <button class="action-btn" data-id="${post.id}" onclick="viewPostDetail(${post.id})">
+                        <i class="fas fa-eye"></i> 查看
+                    </button>
+                </div>
+            `;
+            
+            return div;
+        }
+        
+        // 查看帖子详情
+        async function viewPostDetail(postId) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/forum/posts/${postId}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const post = data.data.post;
+                    const replies = data.data.replies || [];
+                    
+                    let replyList = '';
+                    if (replies.length > 0) {
+                        replyList = '\n\n回答：\n' + replies.map((reply, index) => 
+                            `${index + 1}. ${reply.username}：${reply.content} (${formatTime(reply.created_at)})`
+                        ).join('\n');
+                    }
+                    
+                    alert(`问题详情：\n标题：${post.title}\n内容：${post.content}\n提问者：${post.username}\n提问时间：${formatTime(post.created_at)}\n查看次数：${post.view_count}\n回答数量：${post.reply_count}${replyList}`);
+                }
+            } catch (error) {
+                console.error('查看帖子详情失败:', error);
+            }
+        }
+        
+        // 回答帖子
+        async function viewPost(postId) {
+            if (!currentUser) {
+                showMessage('请先登录再回答问题', 'error');
+                document.getElementById('loginModal').classList.add('active');
+                return;
+            }
+            
+            const answer = prompt('请输入您的回答：');
+            if (answer && answer.trim()) {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/forum/posts/${postId}/replies`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ content: answer.trim() }),
+                        credentials: 'include'
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        showMessage('回答成功！', 'success');
+                        loadForumPosts();
+                    } else {
+                        showMessage(data.message || '回答失败', 'error');
+                    }
+                } catch (error) {
+                    console.error('回答失败:', error);
+                    showMessage('网络错误，请稍后重试', 'error');
+                }
+            }
+        }
+        
+        // 加载课程
+        async function loadCourses() {
+            const container = document.getElementById('coursesList');
+            if (!container) return;
+            
+            container.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/courses`);
+                const data = await response.json();
+                
+                if (data.success && data.data.length > 0) {
+                    container.innerHTML = '';
+                    data.data.forEach(course => {
+                        const courseDiv = document.createElement('div');
+                        courseDiv.className = 'resource-item';
+                        courseDiv.innerHTML = `
+                            <h3 class="resource-title">${course.name}</h3>
+                            <p style="color: var(--text-light); margin-bottom: 1rem;">${course.description || '暂无描述'}</p>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>${course.resource_count || 0} 份资源</span>
+                                <span>${course.post_count || 0} 个讨论</span>
+                            </div>
+                        `;
+                        container.appendChild(courseDiv);
+                    });
+                } else {
+                    container.innerHTML = '<div class="empty-state"><i class="fas fa-book"></i><p>暂无课程信息</p></div>';
+                }
+            } catch (error) {
+                console.error('加载课程失败:', error);
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>加载失败，请稍后重试</p></div>';
+            }
+        }
+        
+        // 加载课程选项
+        async function loadCourseOptions() {
+            const courseFilter = document.getElementById('courseFilter');
+            if (!courseFilter) return;
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/courses`);
+                const data = await response.json();
+                
+                if (data.success && data.data.length > 0) {
+                    // 清空现有选项（保留"全部课程"选项）
+                    while (courseFilter.options.length > 1) {
+                        courseFilter.remove(1);
+                    }
+                    
+                    // 添加课程选项
+                    data.data.forEach(course => {
+                        const option = document.createElement('option');
+                        option.value = course.name;
+                        option.textContent = course.name;
+                        courseFilter.appendChild(option);
+                    });
+                    
+                    // 添加课程筛选事件
+                    courseFilter.addEventListener('change', () => {
+                        currentPage = 1;
+                        loadResources(currentPage);
+                    });
+                }
+            } catch (error) {
+                console.error('加载课程选项失败:', error);
+            }
+            
+            // 添加资源类型筛选事件
+            const resourceTypeFilter = document.getElementById('resourceTypeFilter');
+            if (resourceTypeFilter) {
+                resourceTypeFilter.addEventListener('change', () => {
+                    currentPage = 1;
+                    loadResources(currentPage);
+                });
+            }
+        }
+        
+        // 初始化分页控制
+        function initPagination() {
+            const prevBtn = document.getElementById('prevPage');
+            const nextBtn = document.getElementById('nextPage');
+            const pageInfo = document.getElementById('pageInfo');
+            const paginationControls = document.getElementById('paginationControls');
+            
+            if (prevBtn && nextBtn) {
+                prevBtn.addEventListener('click', () => {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        loadResources(currentPage);
+                    }
+                });
+                
+                nextBtn.addEventListener('click', () => {
+                    currentPage++;
+                    loadResources(currentPage);
+                });
+            }
+        }
+        
+        // 更新分页信息
+        function updatePagination(pagination) {
+            const prevBtn = document.getElementById('prevPage');
+            const nextBtn = document.getElementById('nextPage');
+            const pageInfo = document.getElementById('pageInfo');
+            const paginationControls = document.getElementById('paginationControls');
+            
+            if (pagination && paginationControls) {
+                paginationControls.style.display = 'block';
+                
+                if (pageInfo) {
+                    pageInfo.textContent = `第 ${pagination.page} 页，共 ${pagination.pages} 页`;
+                }
+                
+                if (prevBtn) {
+                    prevBtn.disabled = pagination.page <= 1;
+                }
+                
+                if (nextBtn) {
+                    nextBtn.disabled = pagination.page >= pagination.pages;
+                }
+            } else {
+                paginationControls.style.display = 'none';
+            }
+        }
+        
+        // 初始化搜索功能
+        function initSearch() {
+            const searchBtn = document.getElementById('searchBtn');
+            const searchInput = document.getElementById('searchInput');
+            
+            if (searchBtn && searchInput) {
+                searchBtn.addEventListener('click', performSearch);
+                searchInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        performSearch();
+                    }
+                });
+            }
+            
+            async function performSearch() {
+                const query = searchInput.value.trim();
+                if (!query) {
+                    showMessage('请输入搜索关键词', 'info');
+                    return;
+                }
+                
+                try {
+                    const response = await fetch(`${API_BASE_URL}/search?q=${encodeURIComponent(query)}`);
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        const resources = data.data.resources || [];
+                        const posts = data.data.posts || [];
+                        const courses = data.data.courses || [];
+                        
+                        let resultMessage = `搜索 "${query}" 的结果：\n`;
+                        
+                        if (resources.length > 0) {
+                            resultMessage += `\n找到 ${resources.length} 个资源：\n`;
+                            resources.forEach((resource, index) => {
+                                resultMessage += `${index + 1}. ${resource.title} (${resource.course_name || '未分类'})\n`;
+                            });
+                        }
+                        
+                        if (posts.length > 0) {
+                            resultMessage += `\n找到 ${posts.length} 个帖子：\n`;
+                            posts.forEach((post, index) => {
+                                resultMessage += `${index + 1}. ${post.title}\n`;
+                            });
+                        }
+                        
+                        if (courses.length > 0) {
+                            resultMessage += `\n找到 ${courses.length} 个课程：\n`;
+                            courses.forEach((course, index) => {
+                                resultMessage += `${index + 1}. ${course.name}\n`;
+                            });
+                        }
+                        
+                        if (resources.length === 0 && posts.length === 0 && courses.length === 0) {
+                            resultMessage += '\n没有找到相关结果';
+                        }
+                        
+                        alert(resultMessage);
+      """
+学友通 (XueYouTong) - 校内学习资源共享平台后端
+后端框架：Flask + SQLite
+API设计：RESTful
+"""
+
+import os
+import sqlite3
+from datetime import datetime, timedelta
+from functools import wraps
+from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
+from flask import Flask, request, jsonify, session, g, send_from_directory
+from flask_cors import CORS
+import uuid
+import json
+
+# 初始化Flask应用
+app = Flask(__name__)
+app.secret_key = 'xueyoutong_secret_key_2026_campus_learning_platform'
+app.config['DATABASE'] = 'xueyoutong.db'
+app.config['UPLOAD_FOLDER'] = 'uploads'
+app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50MB文件大小限制
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)  # 会话保持7天
+
+# 允许所有源访问（生产环境中应限制为前端域名）
+CORS(app, supports_credentials=True, resources={r"/*": {"origins": "*"}})
+
+# 允许的文件扩展名
+ALLOWED_EXTENSIONS = {
+    'pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx',
+    'txt', 'jpg', 'jpeg', 'png', 'gif', 'md', 'zip', 'rar'
+}
+
+# 确保上传目录存在
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
+# 数据库连接
+def get_db():
+    """获取数据库连接"""
+    if 'db' not in g:
+        g.db = sqlite3.connect(
+            app.config['DATABASE'],
+            detect_types=sqlite3.PARSE_DECLTYPES
+        )
+        g.db.row_factory = sqlite3.Row
+    return g.db
+
+def close_db(e=None):
+    """关闭数据库连接"""
+    db = g.pop('db', None)
+    if db is not None:
+        db.close()
+
+# 数据库初始化
+def init_db():
+    """初始化数据库表"""
+    with app.app_context():
+        db = get_db()
+        
+        # 创建用户表
+        db.execute('''
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE NOT NULL,
+            password_hash TEXT NOT NULL,
+            email TEXT UNIQUE,
+            avatar TEXT DEFAULT 'default_avatar.png',
+            qq_openid TEXT,
+            wechat_openid TEXT,
+            bio TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            last_login TIMESTAMP
+        )
+        ''')
+        
+        # 创建资源表
+        db.execute('''
+        CREATE TABLE IF NOT EXISTS resources (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            title TEXT NOT NULL,
+            description TEXT,
+            filename TEXT NOT NULL,
+            filepath TEXT NOT NULL,
+            filetype TEXT,
+            filesize INTEGER,
+            resource_type TEXT NOT NULL,
+            course_name TEXT,
+            download_count INTEGER DEFAULT 0,
+            view_count INTEGER DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+        )
+        ''')
+        
+        # 创建论坛帖子表
+        db.execute('''
+        CREATE TABLE IF NOT EXISTS forum_posts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            title TEXT NOT NULL,
+            content TEXT NOT NULL,
+            tags TEXT,
+            view_count INTEGER DEFAULT 0,
+            reply_count INTEGER DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+        )
+        ''')
+        
+        # 创建论坛回复表
+        db.execute('''
+        CREATE TABLE IF NOT EXISTS forum_replies (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            post_id INTEGER NOT NULL,
+            user_id INTEGER NOT NULL,
+            content TEXT NOT NULL,
+            is_accepted BOOLEAN DEFAULT FALSE,
+            upvote_count INTEGER DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (post_id) REFERENCES forum_posts (id) ON DELETE CASCADE,
+            FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+        )
+        ''')
+        
+        # 创建点赞表
+        db.execute('''
+        CREATE TABLE IF NOT EXISTS upvotes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            reply_id INTEGER NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(user_id, reply_id),
+            FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+            FOREIGN KEY (reply_id) REFERENCES forum_replies (id) ON DELETE CASCADE
+        )
+        ''')
+        
+        # 创建课程表
+        db.execute('''
+        CREATE TABLE IF NOT EXISTS courses (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT UNIQUE NOT NULL,
+            description TEXT,
+            resource_count INTEGER DEFAULT 0,
+            post_count INTEGER DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+        ''')
+        
+        # 插入默认课程
+        default_courses = [
+            ('高等数学', '微积分、微分方程、多元函数等'),
+            ('数据结构', '链表、树、图、排序算法等'),
+            ('操作系统', '进程管理、内存管理、文件系统等'),
+            ('计算机网络', 'TCP/IP、HTTP、网络安全等'),
+            ('数据库原理', 'SQL、事务、索引、规范化等'),
+            ('软件工程', '软件开发流程、设计模式、UML等'),
+            ('编译原理', '词法分析、语法分析、语义分析等'),
+            ('计算机组成原理', 'CPU、存储器、指令系统等')
+        ]
+        
+        for course_name, description in default_courses:
+            try:
+                db.execute('''
+                INSERT OR IGNORE INTO courses (name, description) 
+                VALUES (?, ?)
+                ''', (course_name, description))
+            except:
+                pass
+        
+        db.commit()
+
+# 初始化应用上下文
+@app.before_first_request
+def before_first_request():
+    """在第一个请求前初始化数据库"""
+    init_db()
+    # 创建默认管理员用户
+    db = get_db()
+    try:
+        admin_hash = generate_password_hash('admin123')
+        db.execute('''
+        INSERT OR IGNORE INTO users (username, password_hash, email) 
+        VALUES (?, ?, ?)
+        ''', ('admin', admin_hash, 'admin@xueyoutong.com'))
+        db.commit()
+    except:
+        pass
+
+@app.teardown_appcontext
+def teardown_db(exception):
+    """应用上下文结束时关闭数据库"""
+    close_db()
+
+# 辅助函数
+def allowed_file(filename):
+    """检查文件扩展名是否允许"""
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def login_required(f):
+    """登录验证装饰器"""
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            return jsonify({
+                'success': False,
+                'message': '请先登录',
+                'code': 401
+            }), 401
+        return f(*args, **kwargs)
+    return decorated_function
+
+def get_user_info(user_id):
+    """获取用户信息"""
+    db = get_db()
+    user = db.execute(
+        'SELECT id, username, email, avatar, bio, created_at FROM users WHERE id = ?',
+        (user_id,)
+    ).fetchone()
+    return dict(user) if user else None
+
+# API路由
+@app.route('/')
+def index():
+    """首页"""
+    return jsonify({
+        'success': True,
+        'message': '学友通后端服务运行正常',
+        'version': '1.0.0',
+        'timestamp': datetime.now().isoformat()
+    })
+
+# 用户认证相关API
+@app.route('/api/auth/register', methods=['POST'])
+def register():
+    """用户注册"""
+    data = request.json
+    username = data.get('username', '').strip()
+    password = data.get('password', '').strip()
+    email = data.get('email', '').strip()
+    
+    if not username or not password:
+        return jsonify({
+            'success': False,
+            'message': '用户名和密码不能为空',
+            'code': 400
+        }), 400
+    
+    if len(password) < 6:
+        return jsonify({
+            'success': False,
+            'message': '密码长度至少6位',
+            'code': 400
+        }), 400
+    
+    password_hash = generate_password_hash(password)
+    
+    db = get_db()
+    try:
+        cursor = db.execute(
+            'INSERT INTO users (username, password_hash, email) VALUES (?, ?, ?)',
+            (username, password_hash, email)
+        )
+        db.commit()
+        
+        # 自动登录
+        session['user_id'] = cursor.lastrowid
+        session.permanent = True
+        
+        return jsonify({
+            'success': True,
+            'message': '注册成功',
+            'data': {
+                'user_id': cursor.lastrowid,
+                'username': username
+            }
+        }), 201
+    except sqlite3.IntegrityError as e:
+        if 'username' in str(e):
+            return jsonify({
+                'success': False,
+                'message': '用户名已存在',
+                'code': 409
+            }), 409
+        elif 'email' in str(e):
+            return jsonify({
+                'success': False,
+                'message': '邮箱已存在',
+                'code': 409
+            }), 409
+        else:
+            return jsonify({
+                'success': False,
+                'message': '注册失败',
+                'code': 500
+            }), 500
+
+@app.route('/api/auth/login', methods=['POST'])
+def login():
+    """用户登录"""
+    data = request.json
+    username = data.get('username', '').strip()
+    password = data.get('password', '').strip()
+    
+    db = get_db()
+    user = db.execute(
+        'SELECT id, username, password_hash FROM users WHERE username = ?',
+        (username,)
+    ).fetchone()
+    
+    if not user or not check_password_hash(user['password_hash'], password):
+        return jsonify({
+            'success': False,
+            'message': '用户名或密码错误',
+            'code': 401
+        }), 401
+    
+    # 更新最后登录时间
+    db.execute(
+        'UPDATE users SET last_login = ? WHERE id = ?',
+        (datetime.now(), user['id'])
+    )
+    db.commit()
+    
+    # 设置会话
+    session['user_id'] = user['id']
+    session.permanent = True
+    
+    return jsonify({
+        'success': True,
+        'message': '登录成功',
+        'data': {
+            'user_id': user['id'],
+            'username': user['username']
+        }
+    })
+
+@app.route('/api/auth/logout', methods=['POST'])
+def logout():
+    """用户退出登录"""
+    session.clear()
+    return jsonify({
+        'success': True,
+        'message': '退出登录成功'
+    })
+
+@app.route('/api/auth/check', methods=['GET'])
+def check_auth():
+    """检查登录状态"""
+    if 'user_id' in session:
+        user_info = get_user_info(session['user_id'])
+        return jsonify({
+            'success': True,
+            'data': {
+                'is_logged_in': True,
+                'user': user_info
+            }
+        })
+    return jsonify({
+        'success': True,
+        'data': {
+            'is_logged_in': False
+        }
+    })
+
+# 用户相关API
+@app.route('/api/users/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    """获取用户信息"""
+    user_info = get_user_info(user_id)
+    if not user_info:
+        return jsonify({
+            'success': False,
+            'message': '用户不存在',
+            'code': 404
+        }), 404
+    
+    return jsonify({
+        'success': True,
+        'data': user_info
+    })
+
+# 资源相关API
+@app.route('/api/resources', methods=['GET'])
+def get_resources():
+    """获取资源列表"""
+    resource_type = request.args.get('type', '')
+    course_name = request.args.get('course', '')
+    page = int(request.args.get('page', 1))
+    limit = int(request.args.get('limit', 20))
+    offset = (page - 1) * limit
+    
+    db = get_db()
+    
+    # 构建查询条件
+    conditions = []
+    params = []
+    
+    if resource_type:
+        conditions.append('r.resource_type = ?')
+        params.append(resource_type)
+    
+    if course_name:
+        conditions.append('r.course_name = ?')
+        params.append(course_name)
+    
+    where_clause = ' AND '.join(conditions) if conditions else '1=1'
+    
+    # 获取资源总数
+    count_query = f'''
+    SELECT COUNT(*) as total 
+    FROM resources r
+    WHERE {where_clause}
+    '''
+    total_result = db.execute(count_query, params).fetchone()
+    total = total_result['total']
+    
+    # 获取资源列表
+    query = f'''
+    SELECT r.*, u.username, u.avatar
+    FROM resources r
+    JOIN users u ON r.user_id = u.id
+    WHERE {where_clause}
+    ORDER BY r.created_at DESC
+    LIMIT ? OFFSET ?
+    '''
+    params.extend([limit, offset])
+    
+    resources = db.execute(query, params).fetchall()
+    
+    resources_list = []
+    for resource in resources:
+        resource_dict = dict(resource)
+        # 处理文件大小显示
+        if resource_dict['filesize']:
+            size = resource_dict['filesize']
+            if size < 1024:
+                resource_dict['file_size_display'] = f"{size}B"
+            elif size < 1024 * 1024:
+                resource_dict['file_size_display'] = f"{size/1024:.1f}KB"
+            else:
+                resource_dict['file_size_display'] = f"{size/(1024*1024):.1f}MB"
+        else:
+            resource_dict['file_size_display'] = "未知大小"
+        
+        # 处理时间显示
+        created_at = resource_dict['created_at']
+        if isinstance(created_at, str):
+            try:
+                created_at = datetime.fromisoformat(created_at.replace('Z', '+00:00'))
+            except:
+                created_at = datetime.now()
+        
+        time_diff = datetime.now() - created_at
+        if time_diff.days > 365:
+            resource_dict['time_display'] = f"{time_diff.days//365}年前"
+        elif time_diff.days > 30:
+            resource_dict['time_display'] = f"{time_diff.days//30}个月前"
+        elif time_diff.days > 0:
+            resource_dict['time_display'] = f"{time_diff.days}天前"
+        elif time_diff.seconds > 3600:
+            resource_dict['time_display'] = f"{time_diff.seconds//3600}小时前"
+        elif time_diff.seconds > 60:
+            resource_dict['time_display'] = f"{time_diff.seconds//60}分钟前"
+        else:
+            resource_dict['time_display'] = "刚刚"
+        
+        resources_list.append(resource_dict)
+    
+    return jsonify({
+        'success': True,
+        'data': {
+            'resources': resources_list,
+            'pagination': {
+                'page': page,
+                'limit': limit,
+                'total': total,
+                'pages': (total + limit - 1) // limit
+            }
+        }
+    })
+
+@app.route('/api/resources', methods=['POST'])
+@login_required
+def upload_resource():
+    """上传资源"""
+    if 'file' not in request.files:
+        return jsonify({
+            'success': False,
+            'message': '没有上传文件',
+            'code': 400
+        }), 400
+    
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({
+            'success': False,
+            'message': '没有选择文件',
+            'code': 400
+        }), 400
+    
+    if not allowed_file(file.filename):
+        return jsonify({
+            'success': False,
+            'message': f'不支持的文件类型，允许的类型: {", ".join(ALLOWED_EXTENSIONS)}',
+            'code': 400
+        }), 400
+    
+    # 获取表单数据
+    title = request.form.get('title', '').strip()
+    description = request.form.get('description', '').strip()
+    resource_type = request.form.get('resource_type', '').strip()
+    course_name = request.form.get('course_name', '').strip()
+    
+    if not title or not resource_type:
+        return jsonify({
+            'success': False,
+            'message': '标题和资源类型不能为空',
+            'code': 400
+        }), 400
+    
+    # 生成安全的文件名
+    filename = secure_filename(file.filename)
+    # 添加时间戳防止重名
+    file_extension = filename.rsplit('.', 1)[1].lower() if '.' in filename else ''
+    unique_filename = f"{uuid.uuid4().hex}.{file_extension}" if file_extension else uuid.uuid4().hex
+    
+    # 保存文件
+    filepath = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
+    file.save(filepath)
+    
+    # 获取文件信息
+    filesize = os.path.getsize(filepath)
+    
+    # 保存到数据库
+    db = get_db()
+    try:
+        cursor = db.execute('''
+        INSERT INTO resources 
+        (user_id, title, description, filename, filepath, filetype, filesize, resource_type, course_name)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (
+            session['user_id'], title, description, filename, unique_filename, 
+            file_extension, filesize, resource_type, course_name
+        ))
+        
+        # 更新课程资源计数
+        if course_name:
+            db.execute('''
+            UPDATE courses 
+            SET resource_count = resource_count + 1 
+            WHERE name = ?
+            ''', (course_name,))
+        
+        db.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': '资源上传成功',
+            'data': {
+                'resource_id': cursor.lastrowid,
+                'title': title,
+                'filename': filename
+            }
+        }), 201
+    except Exception as e:
+        # 删除已上传的文件
+        if os.path.exists(filepath):
+            os.remove(filepath)
+        return jsonify({
+            'success': False,
+            'message': f'资源保存失败: {str(e)}',
+            'code': 500
+        }), 500
+
+@app.route('/api/resources/<int:resource_id>', methods=['GET'])
+def get_resource(resource_id):
+    """获取资源详情"""
+    db = get_db()
+    
+    # 更新查看次数
+    db.execute(
+        'UPDATE resources SET view_count = view_count + 1 WHERE id = ?',
+        (resource_id,)
+    )
+    
+    resource = db.execute('''
+    SELECT r.*, u.username, u.avatar
+    FROM resources r
+    JOIN users u ON r.user_id = u.id
+    WHERE r.id = ?
+    ''', (resource_id,)).fetchone()
+    
+    if not resource:
+        return jsonify({
+            'success': False,
+            'message': '资源不存在',
+            'code': 404
+        }), 404
+    
+    resource_dict = dict(resource)
+    
+    # 处理文件大小显示
+    if resource_dict['filesize']:
+        size = resource_dict['filesize']
+        if size < 1024:
+            resource_dict['file_size_display'] = f"{size}B"
+        elif size < 1024 * 1024:
+            resource_dict['file_size_display'] = f"{size/1024:.1f}KB"
+        else:
+            resource_dict['file_size_display'] = f"{size/(1024*1024):.1f}MB"
+    else:
+        resource_dict['file_size_display'] = "未知大小"
+    
+    return jsonify({
+        'success': True,
+        'data': resource_dict
+    })
+
+@app.route('/api/resources/<int:resource_id>/download', methods=['GET'])
+@login_required
+def download_resource(resource_id):
+    """下载资源"""
+    db = get_db()
+    
+    # 获取资源信息
+    resource = db.execute(
+        'SELECT filename, filepath FROM resources WHERE id = ?',
+        (resource_id,)
+    ).fetchone()
+    
+    if not resource:
+        return jsonify({
+            'success': False,
+            'message': '资源不存在',
+            'code': 404
+        }), 404
+    
+    # 更新下载次数
+    db.execute(
+        'UPDATE resources SET download_count = download_count + 1 WHERE id = ?',
+        (resource_id,)
+    )
+    db.commit()
+    
+    # 返回文件
+    return send_from_directory(
+        app.config['UPLOAD_FOLDER'],
+        resource['filepath'],
+        as_attachment=True,
+        download_name=resource['filename']
+    )
+
+@app.route('/api/resources/<int:resource_id>', methods=['DELETE'])
+@login_required
+def delete_resource(resource_id):
+    """删除资源"""
+    db = get_db()
+    
+    # 检查资源是否存在且用户有权限删除
+    resource = db.execute(
+        'SELECT id, user_id, filepath, course_name FROM resources WHERE id = ?',
+        (resource_id,)
+    ).fetchone()
+    
+    if not resource:
+        return jsonify({
+            'success': False,
+            'message': '资源不存在',
+            'code': 404
+        }), 404
+    
+    if resource['user_id'] != session['user_id']:
+        # 检查是否是管理员
+        user = db.execute(
+            'SELECT id FROM users WHERE id = ? AND username = "admin"',
+            (session['user_id'],)
+        ).fetchone()
+        if not user:
+            return jsonify({
+                'success': False,
+                'message': '没有权限删除此资源',
+                'code': 403
+            }), 403
+    
+    # 删除文件
+    filepath = os.path.join(app.config['UPLOAD_FOLDER'], resource['filepath'])
+    if os.path.exists(filepath):
+        os.remove(filepath)
+    
+    # 更新课程资源计数
+    if resource['course_name']:
+        db.execute('''
+        UPDATE courses 
+        SET resource_count = resource_count - 1 
+        WHERE name = ?
+        ''', (resource['course_name'],))
+    
+    # 删除数据库记录
+    db.execute('DELETE FROM resources WHERE id = ?', (resource_id,))
+    db.commit()
+    
+    return jsonify({
+        'success': True,
+        'message': '资源删除成功'
+    })
+
+# 论坛相关API
+@app.route('/api/forum/posts', methods=['GET'])
+def get_forum_posts():
+    """获取论坛帖子列表"""
+    page = int(request.args.get('page', 1))
+    limit = int(request.args.get('limit', 20))
+    offset = (page - 1) * limit
+    
+    db = get_db()
+    
+    # 获取帖子总数
+    total_result = db.execute('SELECT COUNT(*) as total FROM forum_posts').fetchone()
+    total = total_result['total']
+    
+    # 获取帖子列表
+    posts = db.execute('''
+    SELECT p.*, u.username, u.avatar
+    FROM forum_posts p
+    JOIN users u ON p.user_id = u.id
+    ORDER BY p.created_at DESC
+    LIMIT ? OFFSET ?
+    ''', (limit, offset)).fetchall()
+    
+    posts_list = []
+    for post in posts:
+        post_dict = dict(post)
+        
+        # 处理标签
+        if post_dict['tags']:
+            try:
+                post_dict['tags_list'] = json.loads(post_dict['tags'])
+            except:
+                post_dict['tags_list'] = post_dict['tags'].split(',')
+        else:
+            post_dict['tags_list'] = []
+        
+        # 处理时间显示
+        created_at = post_dict['created_at']
+        if isinstance(created_at, str):
+            try:
+                created_at = datetime.fromisoformat(created_at.replace('Z', '+00:00'))
+            except:
+                created_at = datetime.now()
+        
+        time_diff = datetime.now() - created_at
+        if time_diff.days > 365:
+            post_dict['time_display'] = f"{time_diff.days//365}年前"
+        elif time_diff.days > 30:
+            post_dict['time_display'] = f"{time_diff.days//30}个月前"
+        elif time_diff.days > 0:
+            post_dict['time_display'] = f"{time_diff.days}天前"
+        elif time_diff.seconds > 3600:
+            post_dict['time_display'] = f"{time_diff.seconds//3600}小时前"
+        elif time_diff.seconds > 60:
+            post_dict['time_display'] = f"{time_diff.seconds//60}分钟前"
+        else:
+            post_dict['time_display'] = "刚刚"
+        
+        posts_list.append(post_dict)
+    
+    return jsonify({
+        'success': True,
+        'data': {
+            'posts': posts_list,
+            'pagination': {
+                'page': page,
+                'limit': limit,
+                'total': total,
+                'pages': (total + limit - 1) // limit
+            }
+        }
+    })
+
+@app.route('/api/forum/posts', methods=['POST'])
+@login_required
+def create_forum_post():
+    """创建论坛帖子"""
+    data = request.json
+    title = data.get('title', '').strip()
+    content = data.get('content', '').strip()
+    tags = data.get('tags', [])
+    
+    if not title or not content:
+        return jsonify({
+            'success': False,
+            'message': '标题和内容不能为空',
+            'code': 400
+        }), 400
+    
+    # 处理标签
+    if isinstance(tags, list):
+        tags_str = json.dumps(tags)
+    else:
+        tags_str = tags
+    
+    db = get_db()
+    try:
+        cursor = db.execute('''
+        INSERT INTO forum_posts (user_id, title, content, tags)
+        VALUES (?, ?, ?, ?)
+        ''', (session['user_id'], title, content, tags_str))
+        db.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': '帖子发布成功',
+            'data': {
+                'post_id': cursor.lastrowid,
+                'title': title
+            }
+        }), 201
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'message': f'帖子发布失败: {str(e)}',
+            'code': 500
+        }), 500
+
+@app.route('/api/forum/posts/<int:post_id>', methods=['GET'])
+def get_forum_post(post_id):
+    """获取论坛帖子详情"""
+    db = get_db()
+    
+    # 更新查看次数
+    db.execute(
+        'UPDATE forum_posts SET view_count = view_count + 1 WHERE id = ?',
+        (post_id,)
+    )
+    
+    # 获取帖子详情
+    post = db.execute('''
+    SELECT p.*, u.username, u.avatar, u.bio
+    FROM forum_posts p
+    JOIN users u ON p.user_id = u.id
+    WHERE p.id = ?
+    ''', (post_id,)).fetchone()
+    
+    if not post:
+        return jsonify({
+            'success': False,
+            'message': '帖子不存在',
+            'code': 404
+        }), 404
+    
+    post_dict = dict(post)
+    
+    # 处理标签
+    if post_dict['tags']:
+        try:
+            post_dict['tags_list'] = json.loads(post_dict['tags'])
+        except:
+            post_dict['tags_list'] = post_dict['tags'].split(',')
+    else:
+        post_dict['tags_list'] = []
+    
+    # 获取回复列表
+    replies = db.execute('''
+    SELECT r.*, u.username, u.avatar
+    FROM forum_replies r
+    JOIN users u ON r.user_id = u.id
+    WHERE r.post_id = ?
+    ORDER BY r.is_accepted DESC, r.upvote_count DESC, r.created_at ASC
+    ''', (post_id,)).fetchall()
+    
+    replies_list = []
+    for reply in replies:
+        reply_dict = dict(reply)
+        
+        # 处理时间显示
+        created_at = reply_dict['created_at']
+        if isinstance(created_at, str):
+            try:
+                created_at = datetime.fromisoformat(created_at.replace('Z', '+00:00'))
+            except:
+                created_at = datetime.now()
+        
+        time_diff = datetime.now() - created_at
+        if time_diff.days > 365:
+            reply_dict['time_display'] = f"{time_diff.days//365}年前"
+        elif time_diff.days > 30:
+            reply_dict['time_display'] = f"{time_diff.days//30}个月前"
+        elif time_diff.days > 0:
+            reply_dict['time_display'] = f"{time_diff.days}天前"
+        elif time_diff.seconds > 3600:
+            reply_dict['time_display'] = f"{time_diff.seconds//3600}小时前"
+        elif time_diff.seconds > 60:
+            reply_dict['time_display'] = f"{time_diff.seconds//60}分钟前"
+        else:
+            reply_dict['time_display'] = "刚刚"
+        
+        replies_list.append(reply_dict)
+    
+    return jsonify({
+        'success': True,
+        'data': {
+            'post': post_dict,
+            'replies': replies_list
+        }
+    })
+
+@app.route('/api/forum/posts/<int:post_id>/replies', methods=['POST'])
+@login_required
+def create_forum_reply(post_id):
+    """创建论坛回复"""
+    data = request.json
+    content = data.get('content', '').strip()
+    
+    if not content:
+        return jsonify({
+            'success': False,
+            'message': '回复内容不能为空',
+            'code': 400
+        }), 400
+    
+    # 检查帖子是否存在
+    db = get_db()
+    post = db.execute(
+        'SELECT id FROM forum_posts WHERE id = ?',
+        (post_id,)
+    ).fetchone()
+    
+    if not post:
+        return jsonify({
+            'success': False,
+            'message': '帖子不存在',
+            'code': 404
+        }), 404
+    
+    try:
+        cursor = db.execute('''
+        INSERT INTO forum_replies (post_id, user_id, content)
+        VALUES (?, ?, ?)
+        ''', (post_id, session['user_id'], content))
+        
+        # 更新帖子回复计数
+        db.execute(
+            'UPDATE forum_posts SET reply_count = reply_count + 1 WHERE id = ?',
+            (post_id,)
+        )
+        
+        db.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': '回复发布成功',
+            'data': {
+                'reply_id': cursor.lastrowid
+            }
+        }), 201
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'message': f'回复发布失败: {str(e)}',
+            'code': 500
+        }), 500
+
+@app.route('/api/forum/replies/<int:reply_id>/upvote', methods=['POST'])
+@login_required
+def upvote_reply(reply_id):
+    """点赞回复"""
+    db = get_db()
+    
+    # 检查回复是否存在
+    reply = db.execute(
+        'SELECT id FROM forum_replies WHERE id = ?',
+        (reply_id,)
+    ).fetchone()
+    
+    if not reply:
+        return jsonify({
+            'success': False,
+            'message': '回复不存在',
+            'code': 404
+        }), 404
+    
+    # 检查是否已经点赞
+    existing_upvote = db.execute(
+        'SELECT id FROM upvotes WHERE user_id = ? AND reply_id = ?',
+        (session['user_id'], reply_id)
+    ).fetchone()
+    
+    if existing_upvote:
+        # 取消点赞
+        db.execute(
+            'DELETE FROM upvotes WHERE user_id = ? AND reply_id = ?',
+            (session['user_id'], reply_id)
+        )
+        db.execute(
+            'UPDATE forum_replies SET upvote_count = upvote_count - 1 WHERE id = ?',
+            (reply_id,)
+        )
+        action = '取消点赞'
+    else:
+        # 点赞
+        db.execute(
+            'INSERT INTO upvotes (user_id, reply_id) VALUES (?, ?)',
+            (session['user_id'], reply_id)
+        )
+        db.execute(
+            'UPDATE forum_replies SET upvote_count = upvote_count + 1 WHERE id = ?',
+            (reply_id,)
+        )
+        action = '点赞'
+    
+    db.commit()
+    
+    # 获取更新后的点赞数
+    updated_reply = db.execute(
+        'SELECT upvote_count FROM forum_replies WHERE id = ?',
+        (reply_id,)
+    ).fetchone()
+    
+    return jsonify({
+        'success': True,
+        'message': f'{action}成功',
+        'data': {
+            'upvote_count': updated_reply['upvote_count']
+        }
+    })
+
+# 课程相关API
+@app.route('/api/courses', methods=['GET'])
+def get_courses():
+    """获取课程列表"""
+    db = get_db()
+    courses = db.execute('''
+    SELECT * FROM courses 
+    ORDER BY resource_count DESC, post_count DESC
+    ''').fetchall()
+    
+    return jsonify({
+        'success': True,
+        'data': [dict(course) for course in courses]
+    })
+
+# 搜索相关API
+@app.route('/api/search', methods=['GET'])
+def search():
+    """搜索资源、帖子和课程"""
+    query = request.args.get('q', '').strip()
+    if not query:
+        return jsonify({
+            'success': True,
+            'data': {
+                'resources': [],
+                'posts': [],
+                'courses': []
+            }
+        })
+    
+    db = get_db()
+    
+    # 搜索资源
+    resources = db.execute('''
+    SELECT r.id, r.title, r.description, r.resource_type, r.course_name, 
+           r.download_count, r.created_at, u.username
+    FROM resources r
+    JOIN users u ON r.user_id = u.id
+    WHERE r.title LIKE ? OR r.description LIKE ? OR r.course_name LIKE ?
+    ORDER BY r.created_at DESC
+    LIMIT 10
+    ''', (f'%{query}%', f'%{query}%', f'%{query}%')).fetchall()
+    
+    # 搜索帖子
+    posts = db.execute('''
+    SELECT p.id, p.title, p.content, p.view_count, p.reply_count, 
+           p.created_at, u.username
+    FROM forum_posts p
+    JOIN users u ON p.user_id = u.id
+    WHERE p.title LIKE ? OR p.content LIKE ? OR p.tags LIKE ?
+    ORDER BY p.created_at DESC
+    LIMIT 10
+    ''', (f'%{query}%', f'%{query}%', f'%{query}%')).fetchall()
+    
+    # 搜索课程
+    courses = db.execute('''
+    SELECT id, name, description, resource_count, post_count
+    FROM courses
+    WHERE name LIKE ? OR description LIKE ?
+    ORDER BY resource_count DESC
+    LIMIT 10
+    ''', (f'%{query}%', f'%{query}%')).fetchall()
+    
+    return jsonify({
+        'success': True,
+        'data': {
+            'resources': [dict(resource) for resource in resources],
+            'posts': [dict(post) for post in posts],
+            'courses': [dict(course) for course in courses]
+        }
+    })
+
+# 统计数据API
+@app.route('/api/stats', methods=['GET'])
+def get_stats():
+    """获取平台统计数据"""
+    db = get_db()
+    
+    # 资源统计
+    resource_stats = db.execute('''
+    SELECT 
+        COUNT(*) as total_resources,
+        SUM(download_count) as total_downloads,
+        SUM(view_count) as total_views
+    FROM resources
+    ''').fetchone()
+    
+    # 用户统计
+    user_stats = db.execute('''
+    SELECT COUNT(*) as total_users FROM users
+    ''').fetchone()
+    
+    # 论坛统计
+    forum_stats = db.execute('''
+    SELECT 
+        COUNT(*) as total_posts,
+        SUM(view_count) as total_post_views,
+        SUM(reply_count) as total_replies
+    FROM forum_posts
+    ''').fetchone()
+    
+    # 热门课程
+    popular_courses = db.execute('''
+    SELECT name, resource_count, post_count
+    FROM courses
+    ORDER BY resource_count + post_count DESC
+    LIMIT 5
+    ''').fetchall()
+    
+    # 最近活动
+    recent_resources = db.execute('''
+    SELECT r.title, r.created_at, u.username
+    FROM resources r
+    JOIN users u ON r.user_id = u.id
+    ORDER BY r.created_at DESC
+    LIMIT 5
+    ''').fetchall()
+    
+    recent_posts = db.execute('''
+    SELECT p.title, p.created_at, u.username
+    FROM forum_posts p
+    JOIN users u ON p.user_id = u.id
+    ORDER BY p.created_at DESC
+    LIMIT 5
+    ''').fetchall()
+    
+    return jsonify({
+        'success': True,
+        'data': {
+            'resource_stats': dict(resource_stats),
+            'user_stats': dict(user_stats),
+            'forum_stats': dict(forum_stats),
+            'popular_courses': [dict(course) for course in popular_courses],
+            'recent_activity': {
+                'resources': [dict(resource) for resource in recent_resources],
+                'posts': [dict(post) for post in recent_posts]
+            }
+        }
+    })
+
+# 错误处理
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({
+        'success': False,
+        'message': '请求的资源不存在',
+        'code': 404
+    }), 404
+
+@app.errorhandler(500)
+def internal_error(error):
+    return jsonify({
+        'success': False,
+        'message': '服务器内部错误',
+        'code': 500
+    }), 500
+
+@app.errorhandler(413)
+def request_entity_too_large(error):
+    return jsonify({
+        'success': False,
+        'message': '文件大小超过限制（最大50MB）',
+        'code': 413
+    }), 413
+
+# 开发服务器运行
+if __name__ == '__main__':
+    # 初始化数据库
+    if not os.path.exists(app.config['DATABASE']):
+        with app.app_context():
+            init_db()
+        print("数据库初始化完成")
+    
+    # 打印API文档
+    print("学友通后端API服务")
+    print("=" * 50)
+    print("API端点列表:")
+    print("1. 用户认证:")
+    print("   POST /api/auth/register  - 用户注册")
+    print("   POST /api/auth/login     - 用户登录")
+    print("   POST /api/auth/logout    - 用户退出")
+    print("   GET  /api/auth/check     - 检查登录状态")
+    print()
+    print("2. 资源管理:")
+    print("   GET  /api/resources      - 获取资源列表")
+    print("   POST /api/resources      - 上传资源")
+    print("   GET  /api/resources/<id> - 获取资源详情")
+    print("   GET  /api/resources/<id>/download - 下载资源")
+    print("   DELETE /api/resources/<id> - 删除资源")
+    print()
+    print("3. 论坛管理:")
+    print("   GET  /api/forum/posts    - 获取帖子列表")
+    print("   POST /api/forum/posts    - 创建帖子")
+    print("   GET  /api/forum/posts/<id> - 获取帖子详情")
+    print("   POST /api/forum/posts/<id>/replies - 创建回复")
+    print("   POST /api/forum/replies/<id>/upvote - 点赞回复")
+    print()
+    print("4. 其他功能:")
+    print("   GET  /api/courses        - 获取课程列表")
+    print("   GET  /api/search         - 搜索")
+    print("   GET  /api/stats          - 获取统计数据")
+    print("=" * 50)
+    print(f"上传文件保存目录: {app.config['UPLOAD_FOLDER']}")
+    print(f"数据库文件: {app.config['DATABASE']}")
+    print("=" * 50)
+    
+    # 启动服务器
+    app.run(
+        host='0.0.0.0',  # 允许外部访问
+        port=5000,
+        debug=True,      # 开发模式
+        threaded=True    # 多线程处理请求
+    )
+Flask==2.3.3
+Werkzeug==2.3.7
+flask-cors==4.0.0
+#!/bin/bash
+
+# 学友通后端部署脚本
+# 适用于Linux/macOS系统
+
+echo "==============================="
+echo "学友通后端部署脚本"
+echo "==============================="
+
+# 检查Python版本
+echo "检查Python版本..."
+python3 --version
+if [ $? -ne 0 ]; then
+    echo "错误: 未找到Python3，请先安装Python3"
+    exit 1
+fi
+
+# 检查pip
+echo "检查pip..."
+pip3 --version
+if [ $? -ne 0 ]; then
+    echo "正在安装pip..."
+    curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+    python3 get-pip.py
+    rm get-pip.py
+fi
+
+# 创建虚拟环境
+echo "创建Python虚拟环境..."
+python3 -m venv venv
+source venv/bin/activate
+
+# 安装依赖
+echo "安装依赖包..."
+pip install -r requirements.txt
+
+# 创建必要目录
+echo "创建必要目录..."
+mkdir -p uploads
+mkdir -p logs
+
+# 初始化数据库
+echo "初始化数据库..."
+python3 -c "
+from app import app, init_db
+with app.app_context():
+    init_db()
+    print('数据库初始化完成')
+"
+
+# 设置文件权限
+echo "设置文件权限..."
+chmod 755 deploy.sh
+chmod 755 start_server.sh
+chmod 755 stop_server.sh
+
+# 创建启动脚本
+echo "创建启动脚本..."
+cat > start_server.sh << 'EOF'
+#!/bin/bash
+source venv/bin/activate
+nohup python3 app.py > logs/server.log 2>&1 &
+echo $! > server.pid
+echo "学友通后端已启动，PID: $(cat server.pid)"
+echo "查看日志: tail -f logs/server.log"
+EOF
+
+# 创建停止脚本
+echo "创建停止脚本..."
+cat > stop_server.sh << 'EOF'
+#!/bin/bash
+if [ -f server.pid ]; then
+    pid=$(cat server.pid)
+    kill $pid
+    rm server.pid
+    echo "学友通后端已停止 (PID: $pid)"
+else
+    echo "未找到运行中的服务"
+fi
+EOF
+
+# 创建配置文件
+echo "创建配置文件..."
+cat > config.json << 'EOF'
+{
+    "server": {
+        "host": "0.0.0.0",
+        "port": 5000,
+        "debug": false,
+        "threaded": true
+    },
+    "database": {
+        "filename": "xueyoutong.db",
+        "backup_dir": "backups"
+    },
+    "uploads": {
+        "folder": "uploads",
+        "max_size_mb": 50,
+        "allowed_extensions": [
+            "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx",
+            "txt", "jpg", "jpeg", "png", "gif", "md", "zip", "rar"
+        ]
+    },
+    "security": {
+        "secret_key": "xueyoutong_secret_key_2026_campus_learning_platform",
+        "session_lifetime_days": 7
+    }
+}
+EOF
+
+# 创建数据库备份脚本
+echo "创建数据库备份脚本..."
+cat > backup_db.sh << 'EOF'
+#!/bin/bash
+# 数据库备份脚本
+BACKUP_DIR="backups"
+mkdir -p $BACKUP_DIR
+TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+BACKUP_FILE="$BACKUP_DIR/xueyoutong_backup_$TIMESTAMP.db"
+cp xueyoutong.db $BACKUP_FILE
+echo "数据库已备份到: $BACKUP_FILE"
+# 保留最近7天的备份
+find $BACKUP_DIR -name "xueyoutong_backup_*.db" -mtime +7 -delete
+EOF
+
+chmod 755 backup_db.sh
+chmod 755 start_server.sh
+chmod 755 stop_server.sh
+
+echo "==============================="
+echo "部署完成！"
+echo "==============================="
+echo ""
+echo "下一步操作:"
+echo "1. 启动服务: ./start_server.sh"
+echo "2. 停止服务: ./stop_server.sh"
+echo "3. 备份数据库: ./backup_db.sh"
+echo ""
+echo "前端配置:"
+echo "在前端HTML文件中，将API请求地址改为:"
+echo "http://你的服务器IP:5000/api/..."
+echo ""
+echo "默认管理员账号:"
+echo "用户名: admin"
+echo "密码: admin123"
+echo ""
+echo "API文档:"
+echo "启动服务后访问: http://localhost:5000/"
+echo "==============================="
+# 学友通后端Nginx配置文件
+# 适用于生产环境部署
+
+# 用户和组
+user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+include /etc/nginx/modules-enabled/*.conf;
+
+events {
+    worker_connections 768;
+    multi_accept on;
+}
+
+http {
+    # 基础设置
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    keepalive_timeout 65;
+    types_hash_max_size 2048;
+    client_max_body_size 50M;  # 允许上传50MB文件
+    
+    # MIME类型
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+    
+    # SSL设置
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+    
+    # 日志设置
+    access_log /var/log/nginx/xueyoutong-access.log;
+    error_log /var/log/nginx/xueyoutong-error.log;
+    
+    # Gzip压缩
+    gzip on;
+    gzip_vary on;
+    gzip_proxied any;
+    gzip_comp_level 6;
+    gzip_types
+        text/plain
+        text/css
+        text/xml
+        text/javascript
+        application/json
+        application/javascript
+        application/xml+rss
+        application/xml
+        image/svg+xml;
+    
+    # 学友通后端服务配置
+    upstream xueyoutong_backend {
+        server 127.0.0.1:5000;
+        keepalive 32;
+    }
+    
+    # 主服务器配置
+    server {
+        listen 80;
+        server_name xueyoutong.yourschool.edu;  # 修改为你的域名
+        return 301 https://$server_name$request_uri;
+    }
+    
+    server {
+        listen 443 ssl http2;
+        server_name xueyoutong.yourschool.edu;  # 修改为你的域名
+        
+        # SSL证书路径 - 修改为你的证书路径
+        ssl_certificate /etc/ssl/certs/your_certificate.crt;
+        ssl_certificate_key /etc/ssl/private/your_private.key;
+        
+        # SSL优化
+        ssl_session_cache shared:SSL:10m;
+        ssl_session_timeout 10m;
+        
+        # 安全头
+        add_header X-Frame-Options DENY;
+        add_header X-Content-Type-Options nosniff;
+        add_header X-XSS-Protection "1; mode=block";
+        add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+        
+        # 静态文件服务
+        location /static/ {
+            alias /path/to/xueyoutong/uploads/;  # 修改为你的上传目录
+            expires 30d;
+            add_header Cache-Control "public, immutable";
+            
+            # 文件类型
+            types {
+                application/pdf pdf;
+                application/msword doc;
+                application/vnd.openxmlformats-officedocument.wordprocessingml.document docx;
+                application/vnd.ms-excel xls;
+                application/vnd.openxmlformats-officedocument.spreadsheetml.sheet xlsx;
+                application/vnd.ms-powerpoint ppt;
+                application/vnd.openxmlformats-officedocument.presentationml.presentation pptx;
+                text/plain txt;
+                image/jpeg jpg jpeg;
+                image/png png;
+                image/gif gif;
+                text/markdown md;
+                application/zip zip;
+                application/x-rar-compressed rar;
+            }
+        }
+        
+        # API代理
+        location /api/ {
+            proxy_pass http://xueyoutong_backend;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            
+            # WebSocket支持
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+            
+            # 超时设置
+            proxy_connect_timeout 60s;
+            proxy_send_timeout 60s;
+            proxy_read_timeout 60s;
+            
+            # 缓冲设置
+            proxy_buffering off;
+            proxy_request_buffering off;
+            
+            # CORS头
+            add_header Access-Control-Allow-Origin $http_origin always;
+            add_header Access-Control-Allow-Credentials true always;
+            add_header Access-Control-Allow-Methods 'GET, POST, PUT, DELETE, OPTIONS' always;
+            add_header Access-Control-Allow-Headers 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization' always;
+            add_header Access-Control-Expose-Headers 'Content-Length,Content-Range' always;
+            
+            # 预检请求处理
+            if ($request_method = 'OPTIONS') {
+                add_header Access-Control-Max-Age 1728000;
+                add_header Content-Type 'text/plain; charset=utf-8';
+                add_header Content-Length 0;
+                return 204;
+            }
+        }
+        
+        # 前端静态文件服务
+        location / {
+            root /var/www/xueyoutong-frontend;  # 修改为你的前端文件目录
+            index index.html;
+            try_files $uri $uri/ /index.html;
+            
+            # 缓存控制
+            location ~* \.(jpg|jpeg|png|gif|ico|css|js)$ {
+                expires 1y;
+                add_header Cache-Control "public, immutable";
+            }
+        }
+        
+        # 健康检查
+        location /health {
+            access_log off;
+            return 200 "healthy\n";
+            add_header Content-Type text/plain;
+        }
+        
+        # 禁止访问敏感文件
+        location ~ /\. {
+            deny all;
+        }
+        
+        location ~* \.(db|sql|log|pid)$ {
+            deny all;
+        }
+    }
+    
+    # 性能优化
+    # 连接限制
+    limit_conn_zone $binary_remote_addr zone=conn_limit_per_ip:10m;
+    limit_conn conn_limit_per_ip 100;
+    
+    # 请求限制
+    limit_req_zone $binary_remote_addr zone=req_limit_per_ip:10m rate=10r/s;
+    limit_req zone=req_limit_per_ip burst=20 nodelay;
+}
+# 学友通后端Docker镜像
+# 使用Python 3.9作为基础镜像
+FROM python:3.9-slim
+
+# 设置工作目录
+WORKDIR /app
+
+# 设置环境变量
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    FLASK_APP=app.py \
+    FLASK_ENV=production \
+    UPLOAD_FOLDER=/app/uploads \
+    DATABASE_FILE=/app/xueyoutong.db
+
+# 安装系统依赖
+RUN apt-get update && apt-get install -y \
+    gcc \
+    sqlite3 \
+    nginx \
+    supervisor \
+    && rm -rf /var/lib/apt/lists/*
+
+# 复制应用文件
+COPY . .
+
+# 安装Python依赖
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 创建必要目录
+RUN mkdir -p /app/uploads \
+    /app/logs \
+    /app/backups \
+    /var/log/supervisor
+
+# 复制配置文件
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY supervisor.conf /etc/supervisor/conf.d/supervisor.conf
+
+# 设置文件权限
+RUN chmod +x deploy.sh start_server.sh stop_server.sh backup_db.sh
+
+# 暴露端口
+EXPOSE 80 443 5000
+
+# 健康检查
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD python -c "import requests; r = requests.get('http://localhost:5000/'); exit(0 if r.status_code == 200 else 1)"
+
+# 启动命令
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisor.conf"]
+[supervisord]
+nodaemon=true
+logfile=/var/log/supervisor/supervisord.log
+pidfile=/var/run/supervisord.pid
+childlogdir=/var/log/supervisor
+
+[program:flask]
+command=python app.py
+directory=/app
+autostart=true
+autorestart=true
+startretries=3
+stderr_logfile=/var/log/supervisor/flask_err.log
+stdout_logfile=/var/log/supervisor/flask_out.log
+environment=PYTHONUNBUFFERED="1"
+
+[program:nginx]
+command=nginx -g "daemon off;"
+autostart=true
+autorestart=true
+startretries=3
+stderr_logfile=/var/log/supervisor/nginx_err.log
+stdout_logfile=/var/log/supervisor/nginx_out.log
+
+[eventlistener:processes]
+command=bash -c "printf 'READY\n'; while read line; do kill -SIGQUIT $PPID; done < /dev/stdin"
+events=PROCESS_STATE_STOPPED, PROCESS_STATE_EXITED, PROCESS_STATE_FATAL
